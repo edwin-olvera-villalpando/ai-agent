@@ -9,9 +9,20 @@ Additionally using the `--verbose` flag, you can view additional metadata regard
  - Prompt tokens
  - Response tokens
 
- ## How to run AI agent?
+## How to run AI agent?
 
- Clone this project into your local project directory and run the following command:
+### Setup
+
+ This agent requires 2 environment variables 
+ - `GEMINI_API_KEY`
+ - `GEMINI_MODEL`
+
+ After cloning this project into your local project directory please create and add a `.env` file to the project's root directory and provide your own `GEMINI_API_KEY` and which `GEMINI_MODEL` you would like the AI agent to interact with. 
+
+ Can't have you using my API key and blowing all my money now can we?
+ 
+ ### Execution
+ Go to the project's root folder in a terminal and run one of the following commands:
 
  ```bash
  uv run main.py "<INSERT_YOUR_PROMPT_HERE>"

@@ -1,20 +1,14 @@
 import argparse
-import os
-from dotenv import load_dotenv
+
 from google import genai
 from google.genai import types
+from config import get_config
 
-load_dotenv()
-api_key = os.environ.get("GEMINI_API_KEY")
-model = os.environ.get('GEMINI_MODEL')
-
-if api_key is None:
-    raise RuntimeError("api_key is None. Please provide api_key")
-
-client = genai.Client(api_key=api_key)
+config = get_config()
+client = genai.Client(api_key=config["api_key"])
 
 def main():
-    
+
     parser = argparse.ArgumentParser(description="Chatbot")
     parser.add_argument("user_prompt", type=str, help="User prompt")
     parser.add_argument("--verbose", action="store_true", help="Enable verbose output")

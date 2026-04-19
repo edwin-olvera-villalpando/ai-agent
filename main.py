@@ -1,32 +1,18 @@
 import argparse
-
-from google import genai
-from google.genai import types
 from config import get_config
+from agent import create_client, prompt_agent
 
-config = get_config()
-client = genai.Client(api_key=config["api_key"])
 
 def main():
-
     parser = argparse.ArgumentParser(description="Chatbot")
     parser.add_argument("user_prompt", type=str, help="User prompt")
     parser.add_argument("--verbose", action="store_true", help="Enable verbose output")
     args = parser.parse_args()
 
-    messages = [types.Content(role="user", parts=[types.Part(text=args.user_prompt)])]
-
-    response = client.models.generate_content(model=model, contents=messages)
-
-    if response.usage_metadata is None:
-        raise RuntimeError("usage_metadata not found in response")
-
-    if args.verbose:
-        print(f"User prompt: {args.user_prompt}")
-        print(f"Prompt tokens: {response.usage_metadata.prompt_token_count}")
-        print(f"Response tokens: {response.usage_metadata.candidates_token_count}")
-    
-    print(f"Response: {response.text}")
+    config = get_config()
+    client = create_client(config["api_key"])
+    response = prompt_agent(client, config["model"], args.user_prompt, verbose=args.verbose)
+    print(f"Response: {response}")
 
 if __name__ == "__main__":
     main()
